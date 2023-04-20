@@ -1,0 +1,40 @@
+- you need to create a project to start measuring the time, so this should be in the logic:
+	
+	if "project_name":
+		timetrace start "project_name"
+	else:
+		timetrace create project "project_name"
+		timetrace start "project_name"
+
+- after you start measuring time, you need to stop it:
+
+	$ timetrace stop
+
+	- this should be only option in webapp after starting task
+
+- combine string to form project name that follows convention project-reference(e.g. ticket ref, or "meeting", etc)
+
+--------------------------------------------
+| PROJECT   | Reference    || |Start| |Stop|
+--------------------------------------------
+| "CARIAD"  | "Ticker-ref" ||
+--------------------------------------------
+
+	- from this project is named "CARIAD-Ticket-ref"
+
+- to create a record
+
+	$ timetrace create record <PROJECT-KEY> {<YYY-MM-DD>|today|yesterday} <HH:MM> <HH:MM>
+
+- to delete a record
+
+	$ timetrace delete record <YYYY-MM-DD-HH-MM> --yes
+
+
+- generate a report (whis will be separate page)
+
+	- it will use repor data created with timetrace
+
+	$ timetrace report
+
+	- this command should be run on every page load/reload
