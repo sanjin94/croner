@@ -35,6 +35,7 @@
 
 	- it will use repor data created with timetrace
 
-	$ timetrace report
+	$ timetrace report -o json
 
 	- this command should be run on every page load/reload
+	- attention! total is in nano seconds [ns]
