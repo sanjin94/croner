@@ -5,8 +5,7 @@ metadata:
 spec:
   containers:
   - args:
-    - echo "test"
-    - curl -XPOST cluster-ip:port
+    - timetrace version
     command:
     - /bin/sh
     - -c
