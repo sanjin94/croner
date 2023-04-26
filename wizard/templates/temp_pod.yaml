@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - args:
-    - kubectl get pods
+    - echo "test"
     - curl -XPOST cluster-ip:port
     command:
     - /bin/sh
