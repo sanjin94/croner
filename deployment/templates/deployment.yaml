@@ -22,7 +22,7 @@ spec:
         #- -c
         volumeMounts:
         - name: local-storage-claim
-          mountPath: /
+          mountPath: /data
       volumes:
       - name: local-storage-claim
         persistentVolumeClaim:

@@ -1,9 +1,13 @@
 FROM alpine/k8s:1.24.13
 
 RUN apk update && \
-    apk add python3 py3-pip
+    apk add python3 \
+            py3-pip \
+            cifs-utils
 
 WORKDIR /app
+
+RUN mkdir /data
 
 COPY requirements.txt .
 
