@@ -4,9 +4,10 @@ metadata:
   name: local-storage-claim
 spec:
   accessModes:
-    - ReadWriteMany
+  - ReadWriteMany
   resources:
     requests:
-      storage: 5Gi
-  storageClassName: local-path
-
+      storage: 10Gi
+  storageClassName: local-storage
+  volumeMode: Filesystem
+  volumeName: local-storage

@@ -3,21 +3,19 @@ kind: PersistentVolume
 metadata:
   name: local-storage
 spec:
+  accessModes:
+  - ReadWriteMany
   capacity:
     storage: 10Gi
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-path
-  volumeMode: Filesystem
-  local:
-    path: C:\Users\u30a68\Documents\timesheet
   nodeAffinity:
     required:
       nodeSelectorTerms:
       - matchExpressions:
-        - key: k3s.io/hostname
+        - key: storage
           operator: In
           values:
-          - hrzagwn116990
-
+          - local
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  hostPath:
+    path: /mnt/c/Users/u30a68/Documents/timesheet

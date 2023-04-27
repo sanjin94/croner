@@ -39,3 +39,9 @@
 
 	- this command should be run on every page load/reload
 	- attention! total is in nano seconds [ns]
+
+- on cluster side:
+	- cluster-ip + port:
+		$ curl -X POST -H "Content-Type: application/json" -d '{"text": "create_pod,my-pod,timetrace,cmd_1,cmd_2,cmd_i"}' http://<cluster-ip>:<port>/create_pod
+	- e.g.:
+		$ curl -X POST -H "Content-Type: application/json" -d '{"text": "create_pod,my-pod,timetrace,create,project,test2"}' http://10.43.97.219:8081/create_pod

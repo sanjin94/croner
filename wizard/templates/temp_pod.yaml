@@ -10,4 +10,11 @@ spec:
     - /bin/sh
     - -c
     image: dominikbraun/timetrace
-    name: test-pod
+    name: timetrace-pod
+    volumeMounts:
+        - name: local-storage-claim
+          mountPath: /data
+  volumes:
+  - name: local-storage-claim
+    persistentVolumeClaim:
+      claimName: local-storage-claim

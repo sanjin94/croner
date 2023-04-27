@@ -29,7 +29,6 @@ async def creation(message: Message):
         inject_receipt_to_yaml(receipt[1:])
         logging.info(f"Commands injected: {[receipt[i] for i in range(2,len(receipt))]} to start pod {receipt[1]}")
         # applying updated yaml template
-        subprocess.run(["KUBECONFIG=config"])
         kubectl_apply()
         logging.info(f"Pod {receipt[1]} created!")
         clean(receipt[1])
@@ -44,11 +43,11 @@ def clean(pod_name):
         svc_str = svc_raw.decode("utf-8")
         svc_list = [line.split() for line in svc_str.splitlines()]
         target_list = [row for row in svc_list if row[0].startswith(pod_name)][0]
-        if target_list[2] == "Completed":
+        if target_list[2] in ["Completed", "CrashLoopBackOff"]:
             kubectl_delete(pod_name)
             return
         else:
-            time.sleep(60)
+            time.sleep(15)
 
 def inject_receipt_to_yaml(receipt):
     with open("templates/temp_pod.yaml", "r") as f:
