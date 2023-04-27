@@ -1,25 +1,66 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+  name: croner-wizard
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: croner-wizard
   template:
     metadata:
       labels:
-        app: nginx
+        app: croner-wizard
     spec:
       containers:
-      - name: nginx
-        image: nginx:latest
+      - name: croner-wizard
+        image: sanjin94/croner-wizard:latest
+        #args:
+        #- export KUBECONFIG=.kube/config
+        #command:
+        #- /bin/sh
+        #- -c
         volumeMounts:
         - name: local-storage-claim
-          mountPath: /usr/share/nginx/html
+          mountPath: /
       volumes:
       - name: local-storage-claim
         persistentVolumeClaim:
           claimName: local-storage-claim
-
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-storage
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 10Gi
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: storage
+          operator: In
+          values:
+          - local
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  hostPath:
+    path: /mnt/c/Users/u30a68/Documents/timesheet
+  #volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: local-storage-claim
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: local-storage
+  volumeMode: Filesystem
+  volumeName: local-storage

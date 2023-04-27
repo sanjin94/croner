@@ -24,11 +24,12 @@ class Message(BaseModel):
 async def creation(message: Message):
     if "create_pod," in message.text.lower():
         logging.info(f"Recieved following message: {message}")
-        receipt = message.split(",")
+        receipt = message.text.split(",")
         #  template yaml file update with received instructions 
         inject_receipt_to_yaml(receipt[1:])
         logging.info(f"Commands injected: {[receipt[i] for i in range(2,len(receipt))]} to start pod {receipt[1]}")
         # applying updated yaml template
+        subprocess.run(["KUBECONFIG=config"])
         kubectl_apply()
         logging.info(f"Pod {receipt[1]} created!")
         clean(receipt[1])
@@ -53,7 +54,6 @@ def inject_receipt_to_yaml(receipt):
     with open("templates/temp_pod.yaml", "r") as f:
         yaml_template = f.read()
     # termination message to be sent after task is finished
-    message = f"terminate_pod,{receipt[0]}"
     yaml_dict = yaml.safe_load(yaml_template)
     # defining pod name
     yaml_dict['metadata']['name'] = receipt[0]
