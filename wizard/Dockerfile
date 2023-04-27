@@ -5,6 +5,8 @@ RUN apk update && \
             py3-pip \
             cifs-utils
 
+ENV KUBECONFIG=/app/data/.kube/config
+
 WORKDIR /app
 
 RUN mkdir /data
@@ -12,6 +14,8 @@ RUN mkdir /data
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
+
+ENV KUBECONFIG=/app/data/.kube/config
 
 COPY . .
 

@@ -15,14 +15,9 @@ spec:
       containers:
       - name: croner-wizard
         image: sanjin94/croner-wizard:latest
-        #args:
-        #- export KUBECONFIG=.kube/config
-        #command:
-        #- /bin/sh
-        #- -c
         volumeMounts:
         - name: local-storage-claim
-          mountPath: /data
+          mountPath: /app/data
       volumes:
       - name: local-storage-claim
         persistentVolumeClaim:
@@ -49,7 +44,6 @@ spec:
   storageClassName: local-storage
   hostPath:
     path: /mnt/c/Users/u30a68/Documents/timesheet
-  #volumeMode: Filesystem
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
