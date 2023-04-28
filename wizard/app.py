@@ -46,8 +46,6 @@ def clean(pod_name):
         if target_list[2] in ["Completed", "CrashLoopBackOff"]:
             kubectl_delete(pod_name)
             return
-        else:
-            time.sleep(15)
 
 def inject_receipt_to_yaml(receipt):
     with open("templates/temp_pod.yaml", "r") as f:

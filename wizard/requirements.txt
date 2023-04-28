@@ -2,3 +2,5 @@ fastapi
 pydantic
 pyyaml
 uvicorn
+pandas
+openpyxl

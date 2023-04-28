@@ -5,8 +5,6 @@ RUN apk update && \
             py3-pip \
             cifs-utils
 
-ENV KUBECONFIG=/app/data/.kube/config
-
 WORKDIR /app
 
 RUN mkdir /data
