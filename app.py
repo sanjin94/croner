@@ -4,7 +4,7 @@ import os
 import requests
 import streamlit as st
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 # Content
@@ -69,6 +69,23 @@ class Croner:
         json_data = json.dumps(data)
         headers = {"Content-Type": "application/json"}
         requests.post(self.url, headers=headers, data=json_data)
+    
+    def list_projects(self):
+        folder_path = "data/projects"
+        file_list = os.listdir(folder_path)
+
+        # Filter only the JSON files that were created in the last 2 months
+        one_month_ago = datetime.now() - timedelta(days=60)
+        json_files = [f for f in file_list if f.endswith(".json") and os.path.getctime(os.path.join(folder_path, f)) >= one_month_ago.timestamp()]
+
+        # Show the JSON files in a Streamlit table
+        if json_files:
+            st.write("Projects:")
+            table_data = [{"Projects": os.path.splitext(f)[0]} for f in json_files]
+            st.table(table_data)
+        else:
+            st.write("No JSON files created in the last month.")
+
 
 # Define the Streamlit app
 def app():
@@ -93,6 +110,7 @@ def app():
             # Send the curl command2
             croner_app.stop_project()
             st.write(f"Project {project_name} stopped")
+        croner_app.list_projects()
         
     # Report page
     elif page == "Report":
