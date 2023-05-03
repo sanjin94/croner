@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.cronerMain.deployment.name }}
+spec:
+  replicas: {{ .Values.cronerMain.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: croner-main
+  template:
+    metadata:
+      labels:
+        app: croner-main
+    spec:
+      containers:
+      - name: croner-main
+        image: {{ .Values.cronerMain.deployment.image }}
+        env:
+        - name: WIZARD_SERVICE
+          value: "{{ .Values.cronerWizard.service.name }}"
+        - name: WIZARD_PORT
+          value: "{{ .Values.cronerWizard.service.port }}"
+        volumeMounts:
+        - name: {{ .Values.persistence.pvcName }}
+          mountPath: {{ .Values.cronerMain.deployment.pvcMountPath }}
+      volumes:
+      - name: {{ .Values.persistence.pvcName }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.pvcName }}

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.cronerWizard.service.name }}
+spec:
+  ports:
+  - port: {{ .Values.cronerWizard.service.port }}
+    protocol: {{ .Values.cronerWizard.service.protocol }}
+    targetPort: {{ .Values.cronerWizard.service.targetPort }}
+  selector:
+    app: croner-wizard
+  type: {{ .Values.cronerWizard.service.type }}

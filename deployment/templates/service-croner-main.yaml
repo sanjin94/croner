@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.cronerMain.service.name }}
+spec:
+  ports:
+  - port: {{ .Values.cronerMain.service.port }}
+    protocol: {{ .Values.cronerMain.service.protocol }}
+    targetPort: {{ .Values.cronerMain.service.targetPort }}
+  selector:
+    app: croner-main
+  type: {{ .Values.cronerMain.service.type }}

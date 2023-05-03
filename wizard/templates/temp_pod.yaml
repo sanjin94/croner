@@ -11,6 +11,9 @@ spec:
     - -c
     image: dominikbraun/timetrace
     name: timetrace-pod
+    env:
+      - name: TZ
+        value: Europe/Zagreb
     volumeMounts:
         - name: local-storage-claim
           mountPath: /data

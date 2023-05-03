@@ -1,0 +1,39 @@
+cronerMain:
+  deployment:
+    name: croner-main
+    replicas: 1
+    image: sanjin94/croner:latest
+    pvcMountPath: app/data
+  service:
+    name: croner-svc
+    port: 8082
+    targetPort: 1444
+    protocol: TCP
+    type: NodePort
+  ingress:
+    name: croner-ingress
+    host: localhost
+    path: /croner
+    pathType: Prefix
+
+cronerWizard:
+  deployment:
+    name: croner-wizard
+    replicas: 1
+    image: sanjin94/croner-wizard:latest
+    pvcMountPath: app/data
+  service:
+    name: croner-wizard-svc
+    port: 8081
+    targetPort: 1404
+    protocol: TCP
+    type: NodePort
+
+persistence:
+  pvName: local-storage
+  pvcName: local-storage-claim
+  storageClass: local-storage
+  accessModes: ReadWriteMany
+  size: 10Gi
+  hostPath: /mnt/c/Users/u30a68/Documents/timesheet
+  volumeMode: Filesystem

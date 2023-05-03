@@ -1,0 +1,4 @@
+apiVersion: v2
+name: croner
+description: A Helm chart for deploying the croner-wizard and croner-main applications.
+version: 0.1.0
