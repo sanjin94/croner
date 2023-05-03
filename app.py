@@ -8,7 +8,10 @@ from datetime import datetime, timedelta
 
 
 # Content
-st.set_page_config(page_title="My Streamlit App", page_icon="favicon.ico")
+st.set_page_config(
+    page_title="Croner", 
+    page_icon="favicon.ico"
+    )
 st.title("Welcome croners! This is webapp called Croner!")
 st.write("The name is derived from cron... right!? ;)")
 
