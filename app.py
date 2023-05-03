@@ -37,9 +37,9 @@ class Croner:
         for project in data:
             table_data.append([project, '', '', ''])
             for record in data[project]['records']:
-                start_time = datetime.fromisoformat(record['start'][:-1]).strftime('%Y-%m-%d %H:%M:%S')
-                end_time = datetime.fromisoformat(record['end'][:-1]).strftime('%Y-%m-%d %H:%M:%S')
-                duration_hours = round((datetime.fromisoformat(record['end'][:-1]) - datetime.fromisoformat(record['start'][:-1])).total_seconds() / 3600, 2)
+                start_time = datetime.fromisoformat(record['start']).strftime('%Y-%m-%d %H:%M:%S')
+                end_time = datetime.fromisoformat(record['end']).strftime('%Y-%m-%d %H:%M:%S')
+                duration_hours = round((datetime.fromisoformat(record['end']) - datetime.fromisoformat(record['start'])).total_seconds() / 3600, 2)
                 table_data.append(['', start_time, end_time, duration_hours])
 
             total_hours = round(data[project]['total'] / 3600000000000, 2)
