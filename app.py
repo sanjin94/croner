@@ -2,6 +2,7 @@ import json
 import time
 import os
 import requests
+import threading
 import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
@@ -71,7 +72,9 @@ class Croner:
         data = {"text": command}
         json_data = json.dumps(data)
         headers = {"Content-Type": "application/json"}
-        requests.post(self.url, headers=headers, data=json_data)
+        thread = threading.Thread(target=requests.post, args=(self.url, ), kwargs={"headers": headers, "data": json_data})
+        thread.start()
+        time.sleep(8)
     
     def list_projects(self):
         folder_path = "data/projects"
@@ -118,6 +121,8 @@ def app():
     # Report page
     elif page == "Report":
         # Call the show_data() function to retrieve the data from the JSON database
+        if st.button("Reload"):
+            croner_app.show_data()
         croner_app.report_date()
         generate = st.sidebar.button("Generate")
         if generate:
